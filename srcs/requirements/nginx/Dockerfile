@@ -12,7 +12,7 @@ COPY site/index.html /var/www/html/index.html
 
 RUN chmod 755 /var/www/html
 
-RUN chown -R www-data:www-data /var/www/html
+RUN chown -R www-data:www-data /var/www/html && rm -rf index.nginx-debian.html
 
 EXPOSE 443
 
