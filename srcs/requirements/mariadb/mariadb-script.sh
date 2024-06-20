@@ -3,7 +3,7 @@
 service mysql start
 
 sleep 3
-mysql -h localhost -u root -p$sql_root_pwd -e "CREATE DATABASE IF NOT EXISTS $sql_db ;"
+mysql -h localhost -u root -p$sql_root_pwd -e "CREATE DATABASE IF NOT EXISTS \`${sql_db}\` ;"
 sleep 1
 mysql -h localhost -u root -p$sql_root_pwd -e "CREATE USER IF NOT EXISTS '$sql_usr'@'localhost' IDENTIFIED BY '$sql_pwd' ;"
 sleep 1
