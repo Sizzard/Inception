@@ -1,6 +1,6 @@
 #!bin/bash
 
-service mysql start
+service mariadb start
 
 sleep 3
 mysql -h localhost -u root -p$sql_root_pwd -e "CREATE DATABASE IF NOT EXISTS \`${sql_db}\` ;"
