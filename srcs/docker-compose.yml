@@ -17,9 +17,9 @@ services:
     build:
       context: ./requirements/mariadb
       dockerfile: Dockerfile
-    ports:
-      - "3306:3306"
     env_file:
       - .env
     volumes:
       - test:/var/lib/mysql
+    expose: 
+    - "3306"
