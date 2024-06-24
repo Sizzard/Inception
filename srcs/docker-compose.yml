@@ -12,7 +12,6 @@ services:
       - .env
 
   mariadb:
-    image: mariadb:latest
     env_file:
       - .env
     ports:
