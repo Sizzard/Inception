@@ -20,6 +20,3 @@ services:
       - .env
     volumes:
       - test:/var/lib/mysql
-
-volumes:
-  db_data:
