@@ -6,4 +6,4 @@ COPY 50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
 COPY mariadb-script.sh /
 
-RUN sh mariadb-script.sh 
+ENTRYPOINT [ "sh" , "/mariadb-script.sh" ]
