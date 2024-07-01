@@ -4,7 +4,7 @@ service mariadb start
 echo "MariaDB service started"
 
 # Attendre que MariaDB soit complètement démarré
-sleep 5
+sleep 4
 
 # Créer la base de données
 mariadb -u root -p${SQL_ROOT_PWD} -e "CREATE DATABASE IF NOT EXISTS \`${SQL_DB}\` ;"
