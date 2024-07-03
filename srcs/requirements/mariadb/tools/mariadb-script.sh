@@ -21,13 +21,13 @@ execute_mariadb_command() {
 execute_mariadb_command "CREATE DATABASE IF NOT EXISTS \`${SQL_DB}\`;"
 
 # Créer l'utilisateur
-execute_mariadb_command "CREATE USER IF NOT EXISTS '${SQL_USR}'@'localhost' IDENTIFIED BY '${SQL_PWD}';"
+execute_mariadb_command "CREATE USER IF NOT EXISTS '${SQL_USR}'@'%' IDENTIFIED BY '${SQL_PWD}';"
 
 # Recharger les privilèges
 execute_mariadb_command "FLUSH PRIVILEGES;"
 
 # Accorder les privilèges
-execute_mariadb_command "GRANT ALL PRIVILEGES ON \`${SQL_DB}\`.* TO '${SQL_USR}'@'localhost';"
+execute_mariadb_command "GRANT ALL PRIVILEGES ON \`${SQL_DB}\`.* TO '${SQL_USR}'@'%';"
 
 # Recharger les privilèges
 execute_mariadb_command "FLUSH PRIVILEGES;"

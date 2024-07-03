@@ -2,7 +2,7 @@
 
 sleep 8;
 
-if [ -f wp-config.php ];
+if [ -f /var/www/wp-config.php ];
 then
     echo "The configuration already exists"
 else
