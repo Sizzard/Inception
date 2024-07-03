@@ -6,28 +6,40 @@ echo "MariaDB service started"
 # Attendre que MariaDB soit complètement démarré
 sleep 4
 
+# Fonction pour exécuter une commande MariaDB et gérer les erreurs
+execute_mariadb_command() {
+    local command=$1
+    if mariadb -u root -p${SQL_ROOT_PWD} -e "$command"; then
+        echo "Successfully executed: $command"
+    else
+        echo "Failed to execute: $command" >&2
+        exit 1
+    fi
+}
+
 # Créer la base de données
-mariadb -u root -p${SQL_ROOT_PWD} -e "CREATE DATABASE IF NOT EXISTS \`${SQL_DB}\` ;"
-echo "Database created if not exists: ${SQL_DB}"
+execute_mariadb_command "CREATE DATABASE IF NOT EXISTS \`${SQL_DB}\`;"
 
 # Créer l'utilisateur
-mariadb -u root -p${SQL_ROOT_PWD} -e "CREATE USER IF NOT EXISTS '${SQL_USR}'@'localhost' IDENTIFIED BY '${SQL_PWD}' ;"
-echo "User created if not exists: ${SQL_USR}"
-
-# Accorder les privilèges
-mariadb -u root -p${SQL_ROOT_PWD} -e "GRANT ALL PRIVILEGES ON \`${SQL_DB}\`.* TO '${SQL_USR}'@'%' IDENTIFIED BY '${SQL_PWD}' ;"
-echo "Granted all privileges on ${SQL_DB} to ${SQL_USR}"
-
-# Modifier le mot de passe de l'utilisateur root
-mariadb -u root -p${SQL_ROOT_PWD} -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${SQL_ROOT_PWD}' ;"
-echo "Root user password changed to '${SQL_ROOT_PWD}' ;"
+execute_mariadb_command "CREATE USER IF NOT EXISTS '${SQL_USR}'@'localhost' IDENTIFIED BY '${SQL_PWD}';"
 
 # Recharger les privilèges
-mariadb -u root -p${SQL_ROOT_PWD} -e "FLUSH PRIVILEGES ;"
-echo "Privileges flushed"
+execute_mariadb_command "FLUSH PRIVILEGES;"
+
+# Accorder les privilèges
+execute_mariadb_command "GRANT ALL PRIVILEGES ON \`${SQL_DB}\`.* TO '${SQL_USR}'@'localhost';"
+
+# Recharger les privilèges
+execute_mariadb_command "FLUSH PRIVILEGES;"
+
+# Modifier le mot de passe de l'utilisateur root
+execute_mariadb_command "ALTER USER 'root'@'localhost' IDENTIFIED BY '${SQL_ROOT_PWD}';"
+
+# Recharger les privilèges
+execute_mariadb_command "FLUSH PRIVILEGES;"
 
 # Arrêter MariaDB proprement
-mysqladmin -u root -padmin shutdown
+mysqladmin -u root -p${SQL_ROOT_PWD} shutdown
 echo "MariaDB service stopped"
 
 # Lancer mysqld_safe

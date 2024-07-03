@@ -1,17 +1,17 @@
 #! /bin/sh
 
-sleep 7;
+sleep 8;
 
 if [ -f wp-config.php ];
 then
     echo "The configuration already exists"
 else
-
+    
     wp config create --allow-root \
                 --dbname=$SQL_DB \
                 --dbuser=$SQL_USR \
                 --dbpass=$SQL_PWD \
-                --dbhost=mariadb:3306 --path='/var/www/wordpress';
+                --dbhost=mariadb:3306 --path='/var/www/wordpress'
     
     wp core install --allow-root --url=facarval.42.fr --title=Inception --admin_user=$WP_ADMIN --admin_email=$WP_ADMIN_MAIL --admin_password=$WP_ADMIN_PASS ;
     

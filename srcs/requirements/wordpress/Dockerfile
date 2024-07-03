@@ -8,6 +8,8 @@ RUN wget https://wordpress.org/wordpress-6.5.3.tar.gz -P /var/www
 
 COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d
 
+RUN chmod 755 /etc/php/7.4/fpm/pool.d/www.conf
+
 WORKDIR /var/www/
 RUN tar -xzf wordpress-6.5.3.tar.gz && rm wordpress-6.5.3.tar.gz
 
@@ -22,8 +24,8 @@ COPY ./tools/wp.sh /usr/bin/.
 
 RUN chmod +x /usr/bin/wp.sh
 
-RUN chown -R root:root /var/www/wordpress
+RUN chown -R www-data:www-data /var/www/wordpress && chmod -R 755 /var/www/wordpress
 
 EXPOSE 9000
 
-CMD [ "/usr/bin/wp.sh" ]
+CMD [ "sh" , "/usr/bin/wp.sh" ]
